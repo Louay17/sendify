@@ -1,15 +1,15 @@
-import { Box, makeStyles, Text, theme } from '@/theme';
-import LottieView from 'lottie-react-native';
-import { scale } from '@/utils/responsive';
-import { Image } from 'expo-image';
-import { UserData } from '../types';
-import { Keyboard, Pressable } from 'react-native';
-import { ChevronLeftIcon, TunisianCurrency } from '@/components/icons';
-import { ScrollView } from 'moti';
-import { formatAmount } from '@/utils/formatter';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button } from '@/components/ui';
 import { createRef, useEffect } from 'react';
+import { Pressable } from 'react-native';
+import LottieView from 'lottie-react-native';
+import { Image } from 'expo-image';
+import { ScrollView } from 'moti';
+
+import { Button } from '@/components/ui';
+import { Box, makeStyles, Text, theme } from '@/theme';
+import { ChevronLeftIcon, TunisianCurrency } from '@/components/icons';
+import { formatAmount } from '@/utils/formatter';
+import { scale } from '@/utils/responsive';
+import { UserData } from '../types';
 
 type Props = {
   receiver: UserData;

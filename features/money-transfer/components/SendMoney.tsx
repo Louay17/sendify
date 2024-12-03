@@ -1,4 +1,3 @@
-import { useMemo, useState } from 'react';
 import { Pressable } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 import { MotiView } from 'moti';

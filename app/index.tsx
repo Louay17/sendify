@@ -18,6 +18,7 @@ import { isNumber } from '@/utils/validators';
 import { FEE_DISCOUNT_THRESHOLD } from '@/features/money-transfer/constants';
 
 export default function Home() {
+  const styles = useStyles();
   const { receiverId } = useLocalSearchParams();
   const receiver = useReceiver({ id: receiverId as string });
   const [amountToSent, setAmountToSent] = useState<string>();
@@ -63,13 +64,13 @@ export default function Home() {
       <KeyboardAvoidingView
         behavior="padding"
         keyboardVerticalOffset={scale(36)}
-        style={{ flex: 1, width: '100%' }}
+        style={styles.fullSpace}
       >
         <ScrollView
           overScrollMode="never"
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1, width: '100%', paddingVertical: scale(24) }}
+          contentContainerStyle={styles.contentContainer}
         >
           <Box width="100%" alignItems="center">
             <UserCard
@@ -154,4 +155,6 @@ const useStyles = makeStyles(theme => ({
     zIndex: 9999,
     backgroundColor: theme.colors.bg_main,
   },
+  fullSpace: { flex: 1, width: '100%' },
+  contentContainer: { flexGrow: 1, width: '100%', paddingVertical: scale(24) },
 }));

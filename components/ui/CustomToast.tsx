@@ -1,7 +1,8 @@
+import { Pressable } from 'react-native';
 import Toast, { BaseToastProps } from 'react-native-toast-message';
-import { Box, Text } from '@/theme';
+
+import { Box, makeStyles, Text } from '@/theme';
 import { scale, wp } from '@/utils/responsive';
-import { Pressable, StyleSheet } from 'react-native';
 import { CloseIcon, ErrorIcon } from '../icons';
 
 const toastConfig = {
@@ -16,7 +17,7 @@ const toastConfig = {
       flexDirection="row"
       gap="sm_12"
       px="sm_12"
-      style={styles.container}
+      style={useStyles().container}
     >
       <ErrorIcon />
       <Box flex={1}>
@@ -35,18 +36,17 @@ const CustomToast = () => {
   return <Toast config={toastConfig} />;
 };
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(theme => ({
   container: {
-    shadowColor: '#000',
+    elevation: 8,
+    shadowColor: theme.colors.black,
     shadowOffset: {
       width: 0,
       height: scale(4),
     },
     shadowOpacity: 0.3,
     shadowRadius: scale(4.65),
-
-    elevation: 8,
   },
-});
+}));
 
 export default CustomToast;

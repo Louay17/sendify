@@ -1,4 +1,4 @@
-import { isNumber } from "./validators";
+import { isNumber } from './validators';
 
 export function maskPhoneNumber(value: number): string {
   if (typeof value !== 'number' || isNaN(value)) {
