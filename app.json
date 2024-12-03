@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "kaoun-task",
-    "slug": "kaoun-task",
+    "name": "Sendify",
+    "slug": "sendify",
     "version": "1.0.0",
-
-    "scheme": "kaoun-task",
+    "scheme": "sendify",
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/favicon.png"
     },
+    "newArchEnabled": true,
     "plugins": [
       "expo-router",
       [
@@ -17,33 +17,54 @@
         {
           "launchMode": "most-recent"
         }
+      ],
+      "./plugins/withDisableForcedDarkModeAndroid.js",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Ubuntu-Regular.ttf",
+            "./assets/fonts/Ubuntu-Bold.ttf",
+            "./assets/fonts/Ubuntu-Medium.ttf"
+          ]
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
-
       "tsconfigPaths": true
     },
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lou.sendify"
     },
     "android": {
+      "package": "com.lou.sendify",
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#EB654A"
       }
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "301c643b-c1cc-4fe9-9677-2a0fa1d9a83e"
+      }
+    },
+    "owner": "louay.atoui"
   }
 }

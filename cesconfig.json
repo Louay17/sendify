@@ -1,6 +1,6 @@
 {
   "cesVersion": "2.12.1",
-  "projectName": "kaoun-task",
+  "projectName": "Sendify",
   "packages": [
     {
       "name": "expo-router",
