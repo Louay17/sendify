@@ -95,7 +95,7 @@ const SuccessTransaction = ({ receiver, transaction, onDismiss }: Props) => {
                   <Text variant="type_general_body2" color="text_disabled">
                     Total
                   </Text>
-                  <AmountText amount={transaction.feeAmount} />
+                  <AmountText amount={transaction.totalAmount} />
                 </Box>
               </Box>
               <Box height={scale(1)} backgroundColor="gray8" />
@@ -172,7 +172,7 @@ const AmountText = ({ amount, size = 'small' }: { amount: number; size?: 'small'
 
 const useStyles = makeStyles(theme => ({
   container: { flex: 1, width: '100%', backgroundColor: theme.colors.bg_main },
-  backIcon: { width: scale(40), height: scale(40), justifyContent: 'center', borderWidth: 1 },
+  backIcon: { width: scale(40), height: scale(40), justifyContent: 'center' },
   contentContainer: {
     flexGrow: 1,
     width: '100%',
