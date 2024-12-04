@@ -1,6 +1,6 @@
 # Sendify app
 
-[**Android: Preview the app (apk)**](<app-preview-link>)
+[**Android: Preview the app (apk)**](<https://expo.dev/artifacts/eas/isy9wwoZTNUNfoZuWMP6Qh.apk>)
 
 ## Installation
 
@@ -24,8 +24,8 @@ npm install
 
 For both platforms, you need to install the custom dev client or create one. To save time, I've created custom dev clients for both platforms, and you can download them directly from the links below:
 
-- [Download Android APK](<android-apk-link>)
-- [Download iOS IPA (for Simulators)](<ios-ipa-link>)
+- [Download Android APK](<https://expo.dev/artifacts/eas/2sm3pxobBR1ub4rUnSeaBa.apk>)
+- [Download iOS IPA (for Simulators)](<https://expo.dev/artifacts/eas/7oaZHU1NYtGxXxAtDa1SyK.tar.gz>)
 
 ### Running the App
 
