@@ -18,7 +18,8 @@ const RootStack = createNativeStackNavigator();
 //
 // If you prefer to use `expo-router`, you can switch to it by:
 // 1. Updating the `main` field in `package.json` to: "main": "expo-router/entry"
-// 2. Reloading the app.
+// 2. Rebuilding the Expo Dev Client to reflect the updated entry point.
+// 3. Starting the development server and launching the app
 
 export default function App() {
   return (
