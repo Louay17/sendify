@@ -41,7 +41,6 @@ export default function HomeScreen({ route }: { route: any }) {
     if (!amountToSend || !isNumber(amountToSend)) return receiver?.balance;
     return receiver.balance - Number(parseFloat(amountToSend) + feesAmount);
   }, [amountToSend, receiver?.balance, feesAmount]);
-  console.log(receiver?.balance);
 
   useEffect(() => {
     if (receiver?.balance && currentBalance < 0) {
