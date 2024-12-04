@@ -1,61 +1,59 @@
-import { useEffect, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import Toast from 'react-native-toast-message';
-import { useLocalSearchParams } from 'expo-router';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Keyboard, ScrollView, StyleSheet } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { useLocalSearchParams } from 'expo-router';
+import Toast from 'react-native-toast-message';
 import { MotiView } from 'moti';
 
 import { Button } from '@/components/ui';
+import { Box, makeStyles, Text } from '@/theme';
 import { WalletIcon } from '@/components/icons';
 import { ScreenLayout } from '@/components/layouts';
 import { formatAmount } from '@/utils/formatter';
 import { scale, wp } from '@/utils/responsive';
-import { Box, makeStyles, Text } from '@/theme';
-import { UserCard } from '@/features/profile/components';
-import { useReceiver } from '@/features/money-transfer/hooks';
-import { SendMoney, SuccessTransaction } from '@/features/money-transfer/components';
 import { isNumber } from '@/utils/validators';
-import { FEE_DISCOUNT_THRESHOLD } from '@/features/money-transfer/constants';
+import { UserCard } from '@/features/profile/components';
+import { SendMoney, SuccessTransaction } from '@/features/money-transfer/components';
+import { calculateFees } from '@/features/money-transfer/helpers/calculations';
+import { useReceiver } from '@/features/money-transfer/hooks';
 
-export default function Home() {
+export default function HomeScreen({ route }: { route: any }) {
   const styles = useStyles();
-  const { receiverId } = useLocalSearchParams();
+  let receiverId = route?.params?.receiverId;
+  if (!receiverId) {
+    // INFO:  This is a fallback in case expo-router
+    const { id } = useLocalSearchParams();
+    receiverId = id;
+  }
+
   const receiver = useReceiver({ id: receiverId as string });
-  const [amountToSent, setAmountToSent] = useState<string>();
+  const [amountToSend, setAmountToSend] = useState<string>();
   const [transactionSucceded, setTransactionSucceded] = useState(false);
+  const insufficientFundsToastShown = useRef(false);
 
   const feesAmount = useMemo(() => {
-    if (!amountToSent) return 0;
-
-    const amount = parseFloat(amountToSent);
-
-    // If the amount is less than 20 TND, apply the discount (5 millimes)
-    if (amount < FEE_DISCOUNT_THRESHOLD) {
-      return 5;
-    }
-
-    // Calculate 1% of the amount
-    const fee = amount * 0.01;
-
-    // Apply maximum cap of 3 TND
-    return fee > 3000 ? 3000 : fee;
-  }, [amountToSent]);
+    if (!amountToSend || !isNumber(amountToSend)) return 0;
+    return calculateFees(parseFloat(amountToSend));
+  }, [amountToSend]);
 
   const currentBalance = useMemo(() => {
-    if (!receiver) return 0;
-
-    return receiver.balance - Number(Number(amountToSent) + feesAmount);
-  }, [amountToSent, receiver?.balance, feesAmount]);
+    if (!receiver?.balance) return 0;
+    if (!amountToSend || !isNumber(amountToSend)) return receiver?.balance;
+    return receiver.balance - Number(parseFloat(amountToSend) + feesAmount);
+  }, [amountToSend, receiver?.balance, feesAmount]);
+  console.log(receiver?.balance);
 
   useEffect(() => {
-    if (receiver?.balance && receiver.balance < Number(Number(amountToSent) + feesAmount)) {
-      Toast.show({
-        type: 'customError',
-        text1: 'insufficient funds',
-        swipeable: true,
-      });
+    if (receiver?.balance && currentBalance < 0) {
+      if (!insufficientFundsToastShown.current) {
+        Toast.show({ type: 'customError', text1: 'Insufficient funds', swipeable: true });
+        insufficientFundsToastShown.current = true;
+      }
+    } else if (insufficientFundsToastShown.current) {
+      Toast.hide();
+      insufficientFundsToastShown.current = false; // Reset when funds are sufficient
     }
-  }, [receiver?.balance, amountToSent, feesAmount]);
+  }, [receiver?.balance, currentBalance]);
 
   if (!receiver) return null;
 
@@ -102,8 +100,8 @@ export default function Home() {
             </Box>
             <Box mt="s_8" />
             <SendMoney
-              amountToSent={amountToSent}
-              setAmountToSent={setAmountToSent}
+              amount={amountToSend}
+              changeAmount={setAmountToSend}
               feesAmount={feesAmount}
               currency={receiver.currency}
             />
@@ -111,17 +109,16 @@ export default function Home() {
         </ScrollView>
         <Box width="100%" padding="m_16">
           <Button
-            disabled={
-              !amountToSent ||
-              !isNumber(amountToSent) ||
-              receiver.balance < Number(Number(amountToSent) + feesAmount)
-            }
             label="Send money"
-            onPress={() => setTransactionSucceded(true)}
+            onPress={() => {
+              setTransactionSucceded(true);
+              Keyboard.dismiss();
+            }}
+            disabled={!amountToSend || !isNumber(amountToSend) || currentBalance < 0}
           />
         </Box>
       </KeyboardAvoidingView>
-      {transactionSucceded && (
+      {transactionSucceded ? (
         <MotiView
           from={{ translateX: wp(100) }}
           animate={{ translateX: 0 }}
@@ -133,16 +130,16 @@ export default function Home() {
             transaction={{
               id: Math.floor(Math.random() * 1e13).toString(),
               feeAmount: feesAmount,
-              moneySent: Number(amountToSent),
-              totalAmount: Number(amountToSent) + feesAmount,
+              moneySent: Number(amountToSend),
+              totalAmount: Number(amountToSend) + feesAmount,
             }}
             onDismiss={() => {
-              setAmountToSent(undefined);
+              setAmountToSend(undefined);
               setTransactionSucceded(false);
             }}
           />
         </MotiView>
-      )}
+      ) : null}
     </ScreenLayout>
   );
 }
@@ -151,8 +148,8 @@ const useStyles = makeStyles(theme => ({
   container: {
     flex: 1,
     width: '100%',
-    position: 'absolute',
     zIndex: 9999,
+    position: 'absolute',
     backgroundColor: theme.colors.bg_main,
   },
   fullSpace: { flex: 1, width: '100%' },

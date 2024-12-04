@@ -9,7 +9,7 @@ const AppHeader = ({ title, rightIcon }: { title?: string; rightIcon?: JSX.Eleme
 
   return (
     <Box flexDirection="row" alignItems="center" px="m_16" justifyContent="space-between">
-      <Pressable hitSlop={scale(42)} onPress={() => router.canGoBack() && router.back()}>
+      <Pressable hitSlop={scale(42)} onPress={() => router?.canGoBack() && router?.back()}>
         <ChevronLeftIcon />
       </Pressable>
       <Text variant="type_general_subtitle1" color="dark">

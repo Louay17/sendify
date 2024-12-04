@@ -38,9 +38,9 @@ const SuccessTransaction = ({ receiver, transaction, onDismiss }: Props) => {
   }, []);
 
   return (
-    <>
+    <Box flex={1}>
       <Box height={scale(56)} px="m_16" justifyContent="center">
-        <Pressable hitSlop={scale(42)} onPress={onDismiss}>
+        <Pressable style={styles.backIcon} onPress={() => onDismiss()}>
           <ChevronLeftIcon />
         </Pressable>
       </Box>
@@ -111,10 +111,10 @@ const SuccessTransaction = ({ receiver, transaction, onDismiss }: Props) => {
           </Box>
         </Box>
         <Box width="100%" padding="m_16">
-          <Button label="Done" onPress={onDismiss} />
+          <Button label="Done" onPress={() => onDismiss()} />
         </Box>
       </ScrollView>
-    </>
+    </Box>
   );
 };
 const Sizes = {
@@ -172,6 +172,7 @@ const AmountText = ({ amount, size = 'small' }: { amount: number; size?: 'small'
 
 const useStyles = makeStyles(theme => ({
   container: { flex: 1, width: '100%', backgroundColor: theme.colors.bg_main },
+  backIcon: { width: scale(40), height: scale(40), justifyContent: 'center', borderWidth: 1 },
   contentContainer: {
     flexGrow: 1,
     width: '100%',
