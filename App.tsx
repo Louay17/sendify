@@ -33,8 +33,6 @@ export default function App() {
                 initialParams={{ receiverId: 'user_1' }}
                 options={{
                   headerShown: false,
-                  statusBarStyle: 'dark',
-                  statusBarBackgroundColor: 'white',
                 }}
               />
             </RootStack.Navigator>

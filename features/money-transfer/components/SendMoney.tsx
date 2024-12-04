@@ -39,29 +39,27 @@ const SendMoney = ({ amount, feesAmount, changeAmount, currency }: SendMoneyProp
             </Text>
           </MotiView>
         ) : null}
-        <Animated.View layout={transition}>
-          <Box gap="xs_4">
-            <Box flexDirection="row" justifyContent="space-between">
-              <Text variant="type_general_body1" color="text_subtitle">
-                Fees:
-              </Text>
-              <Text variant="type_general_body1" color="text_subtitle">
-                {formatAmount(feesAmount || 0)} {currency}
-              </Text>
-            </Box>
-            <Box flexDirection="row" justifyContent="space-between">
-              <Text variant="type_general_subtitle1" color="text_title">
-                Total:
-              </Text>
-              <Text variant="type_general_subtitle1" color="text_title">
-                {formatAmount(
-                  amount && feesAmount && isNumber(amount) && isNumber(feesAmount)
-                    ? Number(amount) + Number(feesAmount)
-                    : 0
-                )}{' '}
-                {currency}
-              </Text>
-            </Box>
+        <Animated.View layout={transition} style={{ gap: 4 }}>
+          <Box flexDirection="row" justifyContent="space-between">
+            <Text variant="type_general_body1" color="text_subtitle">
+              Fees:
+            </Text>
+            <Text variant="type_general_body1" color="text_subtitle">
+              {formatAmount(feesAmount || 0)} {currency}
+            </Text>
+          </Box>
+          <Box flexDirection="row" justifyContent="space-between">
+            <Text variant="type_general_subtitle1" color="text_title">
+              Total:
+            </Text>
+            <Text variant="type_general_subtitle1" color="text_title">
+              {formatAmount(
+                amount && feesAmount && isNumber(amount) && isNumber(feesAmount)
+                  ? Number(amount) + Number(feesAmount)
+                  : 0
+              )}{' '}
+              {currency}
+            </Text>
           </Box>
         </Animated.View>
       </Box>

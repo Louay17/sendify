@@ -12,15 +12,7 @@ export default function Layout() {
       <ThemeProvider theme={theme}>
         <KeyboardProvider>
           <Stack screenOptions={{ headerShown: false, header: () => null }}>
-            <Stack.Screen
-              name="index"
-              initialParams={{ id: 'user_1' }}
-              options={{
-                statusBarStyle: 'dark',
-                statusBarTranslucent: false,
-                statusBarBackgroundColor: 'white',
-              }}
-            />
+            <Stack.Screen name="index" initialParams={{ id: 'user_1' }} />
           </Stack>
         </KeyboardProvider>
         <CustomToast />

@@ -122,7 +122,7 @@ export default function HomeScreen({ route }: { route: any }) {
           from={{ translateX: wp(100) }}
           animate={{ translateX: 0 }}
           transition={{ type: 'timing', duration: 400 }}
-          style={StyleSheet.compose(StyleSheet.absoluteFill, { backgroundColor: 'white' })}
+          style={StyleSheet.absoluteFill}
         >
           <SuccessTransaction
             receiver={receiver}

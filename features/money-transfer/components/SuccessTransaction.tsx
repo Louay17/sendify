@@ -1,6 +1,7 @@
 import { createRef, useEffect } from 'react';
 import { Pressable } from 'react-native';
 import LottieView from 'lottie-react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { ScrollView } from 'moti';
 
@@ -23,6 +24,7 @@ type Props = {
 };
 
 const SuccessTransaction = ({ receiver, transaction, onDismiss }: Props) => {
+  const insets = useSafeAreaInsets();
   const styles = useStyles();
   const animationRef = createRef<LottieView>();
 
@@ -38,7 +40,7 @@ const SuccessTransaction = ({ receiver, transaction, onDismiss }: Props) => {
   }, []);
 
   return (
-    <Box flex={1}>
+    <Box flex={1} style={{ marginTop: insets.top, marginBottom: insets.bottom }} bg="bg_main">
       <Box height={scale(56)} px="m_16" justifyContent="center">
         <Pressable style={styles.backIcon} onPress={() => onDismiss()}>
           <ChevronLeftIcon />
@@ -117,6 +119,7 @@ const SuccessTransaction = ({ receiver, transaction, onDismiss }: Props) => {
     </Box>
   );
 };
+
 const Sizes = {
   small: {
     integerSize: scale(16),
@@ -129,7 +132,6 @@ const Sizes = {
     currencySize: scale(18),
   },
 };
-
 const AmountText = ({ amount, size = 'small' }: { amount: number; size?: 'small' | 'large' }) => {
   const { integerSize, decimalSize, currencySize } = Sizes[size] || Sizes['small'];
   return (

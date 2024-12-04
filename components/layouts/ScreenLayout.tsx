@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 import { Box, makeStyles } from '@/theme';
 import AppHeader from './AppHeader';
@@ -19,6 +20,8 @@ export default function ScreenLayout({ title, children }: PropsWithChildren<{ ti
         <AppHeader title={title} rightIcon={<View />} />
       </Box>
       {children}
+
+      <StatusBar style="dark" backgroundColor="white" />
     </SafeAreaView>
   );
 }
